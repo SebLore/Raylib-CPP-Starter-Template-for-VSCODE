@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ultimate Chicken Horse Clone - Development Workflow</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 2rem;
+      max-width: 800px;
+    }
+    h1, h2, h3 {
+      color: #333;
+    }
+    ul {
+      margin-bottom: 1rem;
+    }
+    code {
+      background-color: #f4f4f4;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>A Development Workflow for Your Ultimate Chicken Horse Clone</h1>
+
+  <p>This document outlines a comprehensive workflow to guide you in creating a clone of Ultimate Chicken Horse using Lua for scripting, raylib for graphics, and EnTT for entity-component-system (ECS) management. The workflow is broken down into distinct phases, from foundational setup to the implementation of the core gameplay loop.</p>
+
+  <h2>Phase 1: Project Scaffolding and Core Engine Setup</h2>
+
+  <h3>1.1. Project Structure and Build System</h3>
+  <ul>
+    <li><strong>Directory Layout:</strong> Organize your project with distinct folders for <code>src</code>, <code>scripts</code>, <code>assets</code>, and build files.</li>
+    <li><strong>Build System:</strong> Use a system like CMake to manage dependencies, especially for raylib and EnTT.</li>
+  </ul>
+
+  <h3>1.2. Library Integration</h3>
+  <ul>
+    <li><strong>raylib:</strong> Add as a submodule.</li>
+    <li><strong>EnTT:</strong> Include the header-only library.</li>
+    <li><strong>Lua:</strong> Build from source or use a pre-compiled version.</li>
+    <li><strong>sol2 (Recommended):</strong> Header-only C++/Lua binding library.</li>
+  </ul>
+
+  <h3>1.3. The C++/Lua Bridge</h3>
+  <ul>
+    <li><strong>Lua State Manager:</strong> Class to initialize Lua, load scripts, and handle errors.</li>
+    <li><strong>Exposing Engine Functionality:</strong>
+      <ul>
+        <li>Logging: <code>Log.info("message")</code></li>
+        <li>Input Handling: Bind raylib's input functions</li>
+        <li>Rendering Wrappers: Initially expose basic raylib functions</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>1.4. Your First "Hello, World!"</h3>
+  <ul>
+    <li>Create <code>main.cpp</code> to initialize the engine and Lua.</li>
+    <li>Use <code>main.lua</code> to draw a shape or text.</li>
+  </ul>
+
+  <h2>Phase 2: Implementing the Platformer Core</h2>
+
+  <h3>2.1. ECS with EnTT and Lua</h3>
+  <ul>
+    <li>Use <code>entt::registry</code> in C++.</li>
+    <li>Expose ECS functions to Lua via a mirrored <code>World</code> object.</li>
+    <li>Systems in Lua: Register and run with C++ wrappers.</li>
+    <li>Resource: <em>entt-meets-sol2</em> on GitHub.</li>
+  </ul>
+
+  <h3>2.2. Physics and Character Controller</h3>
+  <ul>
+    <li>Define components:
+      <ul>
+        <li><code>TransformComponent</code></li>
+        <li><code>PhysicsComponent</code></li>
+        <li><code>ColliderComponent</code></li>
+      </ul>
+    </li>
+    <li>Platforming Mechanics in Lua:
+      <ul>
+        <li>Movement</li>
+        <li>Jumping</li>
+        <li>Gravity</li>
+        <li>Collision Detection (AABB)</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>2.3. Animation</h3>
+  <ul>
+    <li><code>AnimationComponent</code> for current frame data</li>
+    <li>Lua updates component based on state</li>
+    <li>C++ uses data to render frame</li>
+  </ul>
+
+  <h2>Phase 3: The Level Editor</h2>
+
+  <h3>3.1. Level Editor Architecture</h3>
+  <ul>
+    <li>Integrated editor recommended</li>
+    <li>Use <code>raygui</code> for UI</li>
+  </ul>
+
+  <h3>3.2. Core Editor Features</h3>
+  <ul>
+    <li>Grid-based system</li>
+    <li>Object Palette with placeable items</li>
+    <li>Placement & manipulation</li>
+    <li>Object Properties panel</li>
+    <li>Camera Controls: zoom and pan</li>
+  </ul>
+
+  <h3>3.3. Level Serialization</h3>
+  <ul>
+    <li>Use JSON or Lua tables</li>
+    <li>Save type, position, rotation, scale, and properties</li>
+    <li>Expose load/save to Lua via C++</li>
+  </ul>
+
+  <h2>Phase 4: The Gameplay Loop</h2>
+
+  <h3>4.1. Game States</h3>
+  <ul>
+    <li>PartyBox</li>
+    <li>Placement</li>
+    <li>Play</li>
+    <li>Score</li>
+  </ul>
+
+  <h3>4.2. The Party Box</h3>
+  <ul>
+    <li>UI with random item selection</li>
+    <li>Lua controls item logic</li>
+  </ul>
+
+  <h3>4.3. Dynamic Level Modification</h3>
+  <ul>
+    <li>Placement during gameplay</li>
+    <li>Update entt::registry</li>
+    <li>Persist level state between rounds</li>
+  </ul>
+
+  <h3>4.4. Scoring and Winning</h3>
+  <ul>
+    <li>Lua-based scoring rules</li>
+    <li>End game on reaching a score threshold</li>
+  </ul>
+
+  <h2>Phase 5: Polishing and Expansion</h2>
+  <ul>
+    <li>More block types via Lua</li>
+    <li>Character customization</li>
+    <li>Sound and music via raylib</li>
+    <li>Networking (advanced)</li>
+  </ul>
+
+  <p>By following this workflow, you will have a clear path to building your Ultimate Chicken Horse clone. Keep your C++ engine lean and let Lua drive gameplay logic to enable rapid iteration. Good luck!</p>
+
+</body>
+</html>

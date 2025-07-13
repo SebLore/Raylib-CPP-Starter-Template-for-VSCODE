@@ -1,0 +1,268 @@
+
+// struct Ball
+// {
+//     int x;
+//     int y;
+//     int speed_x;
+//     int speed_y;
+//     int radius;
+//     // Function to update the ball's position
+//     void UpdateBall(int screen_width, int screen_height)
+//     {
+//         this->x += this->speed_x;
+//         this->y += this->speed_y;
+
+//         if (this->x + this->radius >= screen_width || this->x - this->radius <= 0)
+//         {
+//             this->speed_x *= -1;
+//         }
+
+//         if (this->y + this->radius >= screen_height || this->y - this->radius <= 0)
+//         {
+//             this->speed_y *= -1;
+//         }
+//     }
+
+//     /// @brief Function to draw the ball using raylib
+//     /// @details This function uses the raylib library's DrawCircle function to draw the ball on the screen.
+//     void Draw()
+//     {
+//         DrawCircle(this->x, this->y, this->radius, WHITE);
+//     }
+// };
+
+// // menu implementation, modular with options, pauses with a while loop. checks mouse input against its menu options.
+// struct Menu
+// {
+//     int x;
+//     int y;
+//     int width;
+//     int height;
+//     bool isOpen = false; // flag to check if the menu is open
+//     const char *title;
+
+//     struct MenuItem
+//     {
+//         int x;
+//         int y;
+//         int width;
+//         int height;
+//         int highlight; // flag to highlight if hovered
+//         const char *text;
+
+//         // function to draw the menu item
+//         void Draw()
+//         {
+//             DrawRectangle(x, y, width, height, LIGHTGRAY);
+//             DrawText(text, x + 10, y + 10, 20, BLACK);
+//         }
+//         // function to check if the mouse is over the menu item
+//         bool IsMouseOver()
+//         {
+//             Vector2 mousePos = GetMousePosition();
+//             return (mousePos.x >= x && mousePos.x <= x + width &&
+//                     mousePos.y >= y && mousePos.y <= y + height);
+//         } // function to handle input for the menu item
+//         void HandleInput()
+//         {
+//             if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && IsMouseOver())
+//             {
+//                 cout << "Menu item clicked: " << text << endl;
+//                 // Handle the action for the clicked menu item here
+//             }
+//         }
+
+//         // function highlight the menu item when the mouse is over it
+//         void Highlight()
+//         {
+//             if (IsMouseOver() && (highlight == 1))
+//             {
+//                 DrawRectangle(x, y, width, height, DARKGRAY);
+//                 DrawText(text, x + 10, y + 10, 20, WHITE);
+//             }
+//             else
+//             {
+//                 Draw();
+//             }
+//         }
+//     };
+//     MenuItem items[10]; // Maximum of 10 menu items
+//     int itemCount;
+
+//     // Constructor
+//     Menu(int x, int y, int width, int height, const char *title)
+//         : x(x), y(y), width(width), height(height), title(title), itemCount(0) {}
+
+//     void AddItem(int itemX, int itemY, int itemWidth, int itemHeight, const char *text)
+//     {
+//         if (itemCount < 10)
+//         {
+//             items[itemCount].x = itemX;
+//             items[itemCount].y = itemY;
+//             items[itemCount].width = itemWidth;
+//             items[itemCount].height = itemHeight;
+//             items[itemCount].text = text;
+//             items[itemCount].highlight = 0; // Initialize highlight flag
+//             itemCount = itemCount + 1;
+//         }
+//         else
+//         {
+//             cout << "Menu item limit reached!" << endl;
+//         }
+//     }
+
+//     void Draw()
+//     {
+//         DrawRectangle(x, y, width, height, GRAY);
+//         DrawText(title, x + 10, y + 10, 20, BLACK);
+//         for (int i = 0; i < itemCount; i++)
+//         {
+//             items[i].Draw();
+//             items[i].Highlight();   // Highlight the item if mouse is over it
+//             items[i].HandleInput(); // Handle input for the item
+//         }
+//     }
+
+//     bool IsMouseOverItem(int itemIndex)
+//     {
+//         if (itemIndex < 0 || itemIndex >= itemCount)
+//             return false;
+//         Vector2 mousePos = GetMousePosition();
+//         return (mousePos.x >= items[itemIndex].x && mousePos.x <= items[itemIndex].x + items[itemIndex].width &&
+//                 mousePos.y >= items[itemIndex].y && mousePos.y <= items[itemIndex].y + items[itemIndex].height);
+//     }
+
+//     void HandleInput()
+//     {
+//         for (int i = 0; i < itemCount; i++)
+//         {
+//             if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && IsMouseOverItem(i))
+//             {
+//                 cout << "Menu item clicked: " << items[i].text << endl;
+//                 items[i].HandleInput(); // Call the handle input function of the item
+//                 // Handle the action for the clicked menu item here
+//             }
+//         }
+//     }
+
+//     void Update()
+//     {
+//         HandleInput();
+//     }
+
+//     void Show()
+//     {
+//         BeginDrawing();
+//         ClearBackground(BLACK);
+//         Draw();
+//         EndDrawing();
+//     }
+
+//     void Pause()
+//     {
+//         isOpen = true;
+//         while (!WindowShouldClose() && isOpen)
+//         {
+//             BeginDrawing();
+//             ClearBackground(BLACK);
+//             Draw();
+//             EndDrawing();
+
+//             // Check for mouse input and handle menu items
+//             HandleInput();
+
+//             // Check for Escape key to close the menu
+//             if (IsKeyPressed(KEY_ESCAPE))
+//             {
+//                 isOpen = false; // Close the menu when Escape is pressed
+//             }
+//         }
+//     }
+// };
+
+// struct Health
+// {
+//     int value;
+// };
+
+// // struct Position
+// // {
+// //     int x;
+// //     int y;
+// // };
+
+// // struct Velocity
+// // {
+// //     int speed_x;
+// //     int speed_y;
+// // };
+
+// struct Radius
+// {
+//     int r; // Radius of the circle
+// };
+
+// struct Player
+// {
+//     entt::entity entity; // Entity ID
+// };
+
+// struct Moving
+// {
+// };
+
+// struct TextureInstance
+// {
+//     Texture2D texture; // Texture for the entity
+//     Rectangle sourceRect; // Source rectangle for texture drawing
+//     Rectangle destRect; // Destination rectangle for texture drawing
+//     Color tint; // Tint color for the texture
+//     TextureInstance(const char *texturePath, 
+//         Rectangle srcRect = {0,0,0,0}, 
+//         Rectangle dstRect = {0,0,0,0}, 
+//         Color tintColor = WHITE)
+//         : texture(LoadTexture(texturePath)), sourceRect(srcRect), destRect(dstRect)
+//     {
+//         if (texture.id == 0) // Check if texture loaded successfully
+//         {
+//             cerr << "Failed to load texture: " << texturePath << endl;
+//         }
+//     }
+//     ~TextureInstance()
+//     {
+//         std::cout << "TextureInstance destroyed, unloading texture." << std::endl;
+//         UnloadTexture(texture); // Unload texture when the instance is destroyed
+//     }
+
+//     void Draw()
+//     {
+//         DrawTexturePro(texture, sourceRect, destRect, (Vector2){0, 0}, 0.0f, WHITE);
+//     }
+// };
+
+// class Scene
+// {
+// public:
+//     entt::registry registry; // Entity registry for the scene
+
+//     Scene() = default;
+
+//     // Function to create a player entity
+//     entt::entity CreatePlayer(int x, int y)
+//     {
+//         entt::entity playerEntity = registry.create();
+//         // registry.emplace<Position>(playerEntity, Position{x, y});
+//         // registry.emplace<Velocity>(playerEntity, Velocity{0, 0});
+//         registry.emplace<Health>(playerEntity, Health{100});
+//         return playerEntity;
+//     }
+
+//     // Function to update the scene
+//     void Update()
+//     {
+//         // Update logic for the scene can be added here
+//     }
+
+// private:
+//     std::vector<ISystem> systems; // List of systems in the scene, looped over in the Update function
+// };
